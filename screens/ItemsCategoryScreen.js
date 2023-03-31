@@ -1,20 +1,17 @@
 import { FlatList, View, Text } from "react-native";
 import { Card } from "react-native-elements";
 import { useState } from "react";
-import { CATEGORIES } from "../shared/itemCategories";
+import { ITEMSCATEGORY } from "../shared/itemSingleCategory";
 
 
-const CategoryScreen = ({navigation}) =>{
-    const [categories, setCategories] =useState(CATEGORIES);
-    const renderDirectoryItem = ({item:category}) =>{
+const ItemsCategoryScreen = ({route}) =>{
+    console.log(route.params.category.name);
+    const [itemsCategory, setItemsCategories] =useState(ITEMSCATEGORY);
+    const renderDirectoryItem = ({item}) =>{
         return(
-             
-            //<Card >
+            // onPress={()=>navigation.navigate('SingleCategory',{category})}
             <Card> 
-                <Card.Image 
-                    source={category.image}
-                    onPress={()=>navigation.navigate('ItemsCategory',{category})}
-                />
+                <Card.Image source={item.image}/>
                 <View style={{ justifyContent: "center", flex: 1 }}>
                     <Text
                         style={{
@@ -23,7 +20,7 @@ const CategoryScreen = ({navigation}) =>{
                             fontSize: 20,
                         }}
                     >
-                        {category.name}
+                        {item.name}
                     </Text>
                 </View>
             </Card>
@@ -34,11 +31,11 @@ const CategoryScreen = ({navigation}) =>{
     
     return(
         <FlatList 
-            data={categories}
+            data={itemsCategory.filter((item) => item.category === route.params.category.name)}
             renderItem={renderDirectoryItem}
             keyExtractor={(item) => item.id.toString()}
         />
     );
 };
 
-export default CategoryScreen;
+export default ItemsCategoryScreen;

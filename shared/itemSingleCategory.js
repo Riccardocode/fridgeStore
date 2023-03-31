@@ -1,0 +1,39 @@
+export const ITEMSCATEGORY = [
+    {
+        id:0,
+        name:"Banana",
+        category:'Fruit',
+        image:require("../assets/imageItemsCategory/Banana.png"), 
+    },
+    {
+        id:1,
+        name:"Apple",
+        category:'Fruit',
+        image:require("../assets/imageItemsCategory/Apple.png"),
+    },
+    {
+        id:2,
+        name:"Pear",
+        category:'Fruit',
+        image:require("../assets/imageItemsCategory/Pear.png"),
+    },
+    {
+        id:3,
+        name:"Peach",
+        category:'Fruit',
+        image:require("../assets/imageItemsCategory/Peach.png"),
+    },
+    {
+        id:4,
+        name:"Broccoli",
+        category:'Vegetables',
+        image:require("../assets/imageItemsCategory/Broccoli.png"),
+    },
+    {
+        id:5,
+        name:"Rape",
+        category:'Vegetables',
+        image:require("../assets/imageItemsCategory/Rape.png"),
+    },
+
+]
