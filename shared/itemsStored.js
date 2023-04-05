@@ -1,0 +1,30 @@
+export const ITEMSSTORED = [
+    {
+        id:0,
+        name:"Apple",
+        image:require("../assets/imageItemsCategory/Apple.png"),
+        typeQuantity:"PZ",
+        quantity:5 
+    },
+    {
+        id:1,
+        name:"Banana",
+        image:require("../assets/imageItemsCategory/Banana.png"),
+        typeQuantity:"PZ",
+        quantity:5 
+    },
+    {
+        id:2,
+        name:"Pear",
+        image:require("../assets/imageItemsCategory/Pear.png"),
+        typeQuantity:"PZ",
+        quantity:5 
+    },
+    {
+        id:3,
+        name:"Peach",
+        image:require("../assets/imageItemsCategory/Peach.png"),
+        typeQuantity:"PZ",
+        quantity:5 
+    },
+]
