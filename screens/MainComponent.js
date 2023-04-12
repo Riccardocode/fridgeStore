@@ -6,7 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ItemsCategoryScreen from "./ItemsCategoryScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "./HomeScreen";
-import AddItems from "./AddItems";
+import AddItemsScreen from "./AddItemsScreen";
 import StorageScreen from "./StorageScreen";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -74,7 +74,7 @@ const AddNavigator = () => {
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen
         name="Add Items"
-        component={AddItems}
+        component={AddItemsScreen}
         options={{ title: "Add Item details" }}
       />
     </Stack.Navigator>

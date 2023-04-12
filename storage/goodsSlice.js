@@ -15,10 +15,28 @@ export const fetchGoods = createAsyncThunk(
     }
 );
 
+export const postGood = createAsyncThunk(
+    "goods/postGood",
+    async (payload, { dispatch, getState }) => {
+      setTimeout(() => {
+        const { goods } = getState();
+        let date = new Date();
+        payload.date = date.toISOString();
+        payload.id = goods.commentsArray.length;
+        dispatch(addGood(payload));
+      }, 2000);
+    }
+  );
+  
+
 const goodsSlice = createSlice({
     name: 'goods',
     initialState: { isLoading: true, errMess: null, goodsArray: [] },
-    reducers: {},
+    reducers: {
+        addGood: (state, action) => {
+        state.goodsArray.push(action.payload);
+      },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchGoods.pending, (state) => {
@@ -37,5 +55,5 @@ const goodsSlice = createSlice({
             });
     }
 });
-
+export const { addGood } = goodsSlice.actions;
 export const goodsReducer = goodsSlice.reducer;
