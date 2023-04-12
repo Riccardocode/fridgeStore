@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Avatar,Card} from "react-native-paper";
+import { baseUrl } from "../shared/baseUrl";
 
 const ItemHome = ({item}) => {
   const [quantity, setQuantity] = useState(item.quantity);
@@ -12,7 +13,7 @@ const ItemHome = ({item}) => {
           <Avatar.Image
             size={100}
             //source={require("../assets/imageItemsCategory/Apple.png")}
-            source={item.image}
+            source={{uri:baseUrl + item.image}}
           />
         </View>
         <View
@@ -57,7 +58,7 @@ const ItemHome = ({item}) => {
             >
               <Text style={{ fontSize: 20 }}>-</Text>
             </TouchableOpacity>
-            <Text style={{ marginHorizontal: 10, fontSize:30, font:'bold' }}>{typeQuantity}: {quantity}</Text>
+            <Text style={{ marginHorizontal: 10, fontSize:30, font:'bold' }}>{typeQuantity}: {quantity} / {item.full_quantity}</Text>
             <TouchableOpacity
               style={{
                 padding: 5,

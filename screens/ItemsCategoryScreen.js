@@ -4,16 +4,21 @@ import { useState } from "react";
 import { ITEMSCATEGORY } from "../shared/itemSingleCategory";
 import SearchBox from "../components/SearchBox";
 
+import { useSelector } from "react-redux";
+import { baseUrl } from "../shared/baseUrl";
+
 const ItemsCategoryScreen = ({ route }) => {
   console.log(route.params.category.name);
-  const [itemsCategory, setItemsCategories] = useState(ITEMSCATEGORY);
+  const itemsStored =useSelector((state) => state.goods);
+
+  //const [itemsCategory, setItemsCategories] = useState(ITEMSCATEGORY);
   const renderDirectoryItem = ({ item }) => {
     return (
       // onPress={()=>navigation.navigate('SingleCategory',{category})}
       
       <Card>
         <View >
-          <Card.Image source={item.image} />
+          <Card.Image source={{uri: baseUrl + item.image}} />
           <View style={{ justifyContent: "center", flex: 1 }}>
             <Text
               style={{
@@ -22,7 +27,7 @@ const ItemsCategoryScreen = ({ route }) => {
                 fontSize: 20,
               }}
             >
-              {item.name}
+              {item.name} Qt: {item.quantity} / {item.full_quantity}
             </Text>
           </View>
         </View>
@@ -33,7 +38,7 @@ const ItemsCategoryScreen = ({ route }) => {
   return (
     <>
       <FlatList
-        data={itemsCategory.filter(
+        data={itemsStored.goodsArray.filter(
           (item) => item.category === route.params.category.name
         )}
   
