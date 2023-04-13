@@ -7,12 +7,14 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  Text,
   PermissionsAndroid,
 } from "react-native";
 
 import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
+
 
 
 const AddItemsScreen = () => {
@@ -24,12 +26,35 @@ const AddItemsScreen = () => {
   const [imageUrl, setImageUrl] = useState('');
 
       
+  const chooseImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  
+    if (status !== 'granted') {
+      console.log('Permission not granted!');
+      return;
+    }
+  
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  
+    if (!result.canceled) {
+      const source = { uri: result.uri };
+  
+      // You can now use the selected image source in your component's state or pass it to a function to upload or display it.
+      setSelectedImage(source);
+    }
+  };
 
   const getImageFromCamera = async () => {
     const cameraPermission =
         await ImagePicker.requestCameraPermissionsAsync();
 
     if (cameraPermission.status === 'granted') {
+      console.log(cameraPermission);
         const capturedImage = await ImagePicker.launchCameraAsync({
             allowsEditing: true,
             aspect: [1, 1]
@@ -99,16 +124,26 @@ const AddItemsScreen = () => {
         onChangeText={(quantityMax) => setQuantityMax(quantityMax)}
       />
 
-      <View>
+      <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'space-evenly'}}>
         <TouchableOpacity onPress={() => getImageFromCamera()}>
           <Image
-            style={{ width: 100, height: 100 }}
-            source={require("../assets/icon.png")}
+            style={{ width: 170, height: 170, marginTop:30 }}
+            source={require("../assets/camera.png")}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={ () => chooseImage()}>
+          <Image
+            style={{ width: 170, height: 170,marginTop:30}}
+            source={require("../assets/gallery.png")}
           />
         </TouchableOpacity>
 
         <TouchableOpacity></TouchableOpacity>
       </View>
+
+      <TouchableOpacity onPress={ () =>{} }>
+          <Text style={styles.submit}>Submit</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -131,6 +166,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     height: 50,
   },
+  submit:{
+    margin: 10,
+    textAlign:"center",
+    textAlignVertical:'center',
+    backgroundColor: "blue",
+    color: "white",
+    fontSize: 20,
+    height: 50,
+    borderRadius: 10,
+  }
 });
 
 export default AddItemsScreen;
