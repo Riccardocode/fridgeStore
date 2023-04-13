@@ -3,10 +3,13 @@ import ItemsHomePage from "../components/ItemsHomePage";
 import SearchBar from "react-native-elements/dist/searchbar/SearchBar-ios";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Button, Icon } from "react-native-elements";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 
-const StorageScreen = () => {
+const StorageScreen = ({navigation}) => {
   const [search, setSearch] = useState("");
+  
   return (
     <SafeAreaView>
       <View>
@@ -15,7 +18,8 @@ const StorageScreen = () => {
           value={search}
           onChangeText={setSearch}
         />
-        <ItemsHomePage search={search} />
+        <ItemsHomePage search={search} navigation={navigation}  />
+        
       </View>
     </SafeAreaView>
   );

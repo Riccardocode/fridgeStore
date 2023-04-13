@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native-animatable";
-import { Button } from "react-native-elements";
+import { Button,Icon } from "react-native-elements";
 import {
   SafeAreaView,
   StyleSheet,
@@ -19,7 +19,7 @@ import { postGood } from "../storage/goodsSlice";
 
 
 
-const AddItemsScreen = () => {
+const AddItemsScreen = (props) => {
   const dispatch= useDispatch();
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
@@ -160,11 +160,53 @@ const AddItemsScreen = () => {
       <TouchableOpacity onPress={ () =>submit() }>
           <Text style={styles.submit}>Submit</Text>
       </TouchableOpacity>
+
+      <View style={{ flexDirection: "row",paddingTop:105 }}>
+        <View style={styles.formButton}>
+          <Button
+            onPress={() => props.navigation.navigate("Storage")}
+            title="Storage"
+            color="#5637DD"
+            icon={
+              <Icon
+                name="archive"
+                type="font-awesome"
+                color="#fff"
+                iconStyle={{ marginRight: 10 }}
+              />
+            }
+            buttonStyle={{ backgroundColor: "#5637DD" }}
+          >
+            <Text>ciao</Text>
+          </Button>
+        </View>
+
+        <View style={styles.formButton}>
+          <Button
+            onPress={() => props.navigation.navigate("Add Items")}
+            title="Add Item"
+            color="#5637DD"
+            icon={
+              <Icon
+                name="plus"
+                type="font-awesome"
+                color="#fff"
+                iconStyle={{ marginRight: 10 }}
+              />
+            }
+            buttonStyle={{ backgroundColor: "#5637DD" }}
+          ></Button>
+        </View>
+      </View>
+
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  formButton: {
+    width: "50%",
+  },
   input: {
     margin: 10,
     marginTop:20,

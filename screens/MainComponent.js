@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchGoods } from "../storage/goodsSlice";
 import { fetchSuppliers } from "../storage/suppliersSlice";
+import SendOrderScreen from "./sendOrderScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -65,6 +66,20 @@ const StorageNavigator = () => {
         component={StorageScreen}
         options={{ title: "Storage" }}
       />
+      
+    </Stack.Navigator>
+  );
+};
+const SendOrder = () => {
+  const Stack = createStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen
+        name="SendOrder"
+        component={SendOrderScreen}
+        options={{ title: "Send Order" }}
+      />
+      
     </Stack.Navigator>
   );
 };
@@ -122,6 +137,11 @@ const Main = () => {
           name="Storage"
           component={StorageNavigator}
           options={{ title: "Storage" }}
+        />
+        <Drawer.Screen
+          name="Send Order"
+          component={SendOrder}
+          options={{ title: "Send Order" }}
         />
       </Drawer.Navigator>
     </View>
