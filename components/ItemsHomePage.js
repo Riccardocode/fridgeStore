@@ -31,10 +31,7 @@ const ItemsHomePage = ({ search }) => {
           )}
           keyExtractor={(item) => item.id.toString()}
         />
-        {/* button at the bottom to update the new data into server? or shall I update everytime there is a change? */}
-        <TouchableOpacity style={styles.updateButton} onPress= {() =>{}}>
-          <Text style={{textAlign:'center', textAlignVertical:'center' ,color:"white"}}>update Server</Text>
-        </TouchableOpacity>
+        
       </View>
     </SafeAreaView>
   );

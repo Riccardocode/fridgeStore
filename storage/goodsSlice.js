@@ -15,19 +15,24 @@ export const fetchGoods = createAsyncThunk(
     }
 );
 
+
+  
+  
+
 export const postGood = createAsyncThunk(
     "goods/postGood",
     async (payload, { dispatch, getState }) => {
       setTimeout(() => {
-        const { goods } = getState();
-        let date = new Date();
-        payload.date = date.toISOString();
-        payload.id = goods.goodsArray.length-1;
+        const { goods } = getState();  
+        console.log(payload);      
+        payload["id"] = goods.goodsArray.length;
+        console.log(payload);
         dispatch(addGood(payload));
       }, 2000);
     }
   );
   
+ 
 
 const goodsSlice = createSlice({
     name: 'goods',
@@ -35,7 +40,21 @@ const goodsSlice = createSlice({
     reducers: {
         addGood: (state, action) => {
         state.goodsArray.push(action.payload);
-      },
+      }, 
+        // updateQuantity:(state, action) =>{
+        //     let sta = state.goodsArray;
+        //     console.log(action.payload);
+
+        //     state.goodsArray.map((good)=>{
+        //         //console.log(good.id + ' e poi ' + action)
+        //         if(good.id == action.payload[0]){
+        //             good.quantity = action.payload[1];
+        //             console.log(good.quantity);
+        //         }
+        //     })
+            
+        // }
+      
     },
     extraReducers: (builder) => {
         builder
@@ -55,5 +74,5 @@ const goodsSlice = createSlice({
             });
     }
 });
-export const { addGood } = goodsSlice.actions;
+export const { addGood,updateQuantity } = goodsSlice.actions;
 export const goodsReducer = goodsSlice.reducer;

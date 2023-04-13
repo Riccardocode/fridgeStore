@@ -14,18 +14,34 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { postGood } from "../storage/goodsSlice";
 
 
 
 const AddItemsScreen = () => {
+  const dispatch= useDispatch();
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [quantityType, setQuantityType] = useState("");
   const [quantity, setQuantity] = useState("");
   const [quantityMax, setQuantityMax] = useState("");
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState('./images/unicorn.png');
 
-      
+  const submit= ()=>{
+    console.log('entrato in submit');
+    const newItem ={
+      //add the id before pushing the object to the array
+      name:name,
+      category:category,
+      typeQuantity:quantityType,
+      quantity:quantity,
+      full_quantity:quantityMax,
+      //remember to change the url with the one taken from the camera or gallery. 
+      image:imageUrl
+    }
+    dispatch(postGood(newItem));
+  }  
   const chooseImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
   
@@ -141,7 +157,7 @@ const AddItemsScreen = () => {
         <TouchableOpacity></TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={ () =>{} }>
+      <TouchableOpacity onPress={ () =>submit() }>
           <Text style={styles.submit}>Submit</Text>
       </TouchableOpacity>
     </SafeAreaView>

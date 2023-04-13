@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Text, View, ScrollView } from "react-native";
 import ItemsHomePage from "../components/ItemsHomePage";
 import SearchBar from "react-native-elements/dist/searchbar/SearchBar-ios";
 import { useState } from "react";

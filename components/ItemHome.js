@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Avatar,Card} from "react-native-paper";
 import { baseUrl } from "../shared/baseUrl";
+import { useSelector, useDispatch } from "react-redux";
+import { updateQuantity } from "../storage/goodsSlice";
+
 
 
 const ItemHome = ({item}) => {
+  const itemsStored = useSelector((state) => state.goods.goodsArray);
+  const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(item.quantity);
   const [typeQuantity, setTypeQuantity] = useState(item.typeQuantity);
   return (
@@ -54,6 +59,13 @@ const ItemHome = ({item}) => {
               onPress={() => {
                 if (quantity > 0) {
                   setQuantity(quantity - 1);
+                  //Codice per aggiornare la quantita' all'interno del vettore
+                  // itemsStored.map((good)=>{
+                  //   if(good.id == item.id){
+                  //    dispatch(updateQuantity([item.id, quantity]))
+                  //    console.log(good.quantity);
+
+                  //   }})
                 }
               }}
             >
