@@ -4,6 +4,7 @@ import SearchBar from "react-native-elements/dist/searchbar/SearchBar-ios";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+
 const StorageScreen = () => {
   const [search, setSearch] = useState("");
   return (

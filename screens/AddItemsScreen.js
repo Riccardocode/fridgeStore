@@ -127,7 +127,7 @@ const AddItemsScreen = () => {
       <View style={{flexDirection:'row', alignItems:'baseline', justifyContent:'space-evenly'}}>
         <TouchableOpacity onPress={() => getImageFromCamera()}>
           <Image
-            style={{ width: 170, height: 170, marginTop:30 }}
+            style={{ width: 170, height: 170, marginTop:30, marginLeft:20 }}
             source={require("../assets/camera.png")}
           />
         </TouchableOpacity>
@@ -151,6 +151,7 @@ const AddItemsScreen = () => {
 const styles = StyleSheet.create({
   input: {
     margin: 10,
+    marginTop:20,
     backgroundColor: "hsl(3, 17%, 45%)",
     color: "white",
     fontSize: 20,

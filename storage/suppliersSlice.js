@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { baseUrl } from '../shared/baseUrl';
 
-export const fetchGoods = createAsyncThunk(
-    'goods/fetchGoods',
+export const fetchSuppliers = createAsyncThunk(
+    'suppliers/fetchSuppliers',
     async () => {
-        const response = await fetch(baseUrl + 'goods');
+        const response = await fetch(baseUrl + 'suppliers');
         if (!response.ok) {
             return Promise.reject(
                 'Unable to fetch, status: ' + response.status
@@ -15,39 +15,39 @@ export const fetchGoods = createAsyncThunk(
     }
 );
 
-export const postGood = createAsyncThunk(
-    "goods/postGood",
+export const postSupplier = createAsyncThunk(
+    "suppliers/postSupplier",
     async (payload, { dispatch, getState }) => {
       setTimeout(() => {
-        const { goods } = getState();
+        const { suppliers } = getState();
         let date = new Date();
         payload.date = date.toISOString();
-        payload.id = goods.goodsArray.length-1;
-        dispatch(addGood(payload));
+        payload.id = suppliers.suppliersArray.length-1;
+        dispatch(addSupplier(payload));
       }, 2000);
     }
   );
   
 
-const goodsSlice = createSlice({
-    name: 'goods',
-    initialState: { isLoading: true, errMess: null, goodsArray: [] },
+const suppliersSlice = createSlice({
+    name: 'suppliers',
+    initialState: { isLoading: true, errMess: null, suppliersArray: [] },
     reducers: {
-        addGood: (state, action) => {
-        state.goodsArray.push(action.payload);
+        addSupplier: (state, action) => {
+        state.suppliersArray.push(action.payload);
       },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchGoods.pending, (state) => {
+            .addCase(fetchSuppliers.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(fetchGoods.fulfilled, (state, action) => {
+            .addCase(fetchSuppliers.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.errMess = null;
-                state.goodsArray = action.payload;
+                state.suppliersArray = action.payload;
             })
-            .addCase(fetchGoods.rejected, (state, action) => {
+            .addCase(fetchSuppliers.rejected, (state, action) => {
                 state.isLoading = false;
                 state.errMess = action.error
                     ? action.error.message
@@ -55,5 +55,5 @@ const goodsSlice = createSlice({
             });
     }
 });
-export const { addGood } = goodsSlice.actions;
-export const goodsReducer = goodsSlice.reducer;
+export const { addSupplier } = suppliersSlice.actions;
+export const suppliersReducer = suppliersSlice.reducer;

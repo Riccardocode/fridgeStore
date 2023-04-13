@@ -11,6 +11,7 @@ import StorageScreen from "./StorageScreen";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchGoods } from "../storage/goodsSlice";
+import { fetchSuppliers } from "../storage/suppliersSlice";
 
 const Drawer = createDrawerNavigator();
 
@@ -86,6 +87,8 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(fetchGoods());
+    dispatch(fetchSuppliers());
+   
   }, [dispatch]);
 
   //return <CategoryScreen categories = {categories}/>
