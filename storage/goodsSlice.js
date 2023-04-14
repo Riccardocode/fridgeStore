@@ -41,19 +41,20 @@ const goodsSlice = createSlice({
         addGood: (state, action) => {
         state.goodsArray.push(action.payload);
       }, 
-        // updateQuantity:(state, action) =>{
-        //     let sta = state.goodsArray;
-        //     console.log(action.payload);
+        updateQuantity:(state, action) =>{
+            let sta = state.goodsArray;
+            console.log(action.payload);
 
-        //     state.goodsArray.map((good)=>{
-        //         //console.log(good.id + ' e poi ' + action)
-        //         if(good.id == action.payload[0]){
-        //             good.quantity = action.payload[1];
-        //             console.log(good.quantity);
-        //         }
-        //     })
+            state.goodsArray.map((good)=>{
+                //console.log(good.id + ' e poi ' + action)
+                if(good.id == action.payload[0]){
+                    console.log("ecco" + good.quantity);
+                    good.quantity = action.payload[1];
+                    console.log(good.quantity);
+                }
+            })
             
-        // }
+        }
       
     },
     extraReducers: (builder) => {

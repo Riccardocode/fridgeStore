@@ -161,7 +161,7 @@ const AddItemsScreen = (props) => {
           <Text style={styles.submit}>Submit</Text>
       </TouchableOpacity>
 
-      <View style={{ flexDirection: "row",paddingTop:105 }}>
+      <View style={{ flexDirection: "row", paddingTop:39}}>
         <View style={styles.formButton}>
           <Button
             onPress={() => props.navigation.navigate("Storage")}

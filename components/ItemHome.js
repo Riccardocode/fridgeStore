@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { Avatar,Card} from "react-native-paper";
+import { Avatar, Card } from "react-native-paper";
 import { baseUrl } from "../shared/baseUrl";
 import { useSelector, useDispatch } from "react-redux";
 import { updateQuantity } from "../storage/goodsSlice";
 
-
-
-const ItemHome = ({item}) => {
+const ItemHome = ({ item }) => {
   const itemsStored = useSelector((state) => state.goods.goodsArray);
   const dispatch = useDispatch();
-  const [quantity, setQuantity] = useState(item.quantity);
   const [typeQuantity, setTypeQuantity] = useState(item.typeQuantity);
   return (
     <Card>
@@ -19,7 +16,7 @@ const ItemHome = ({item}) => {
           <Avatar.Image
             size={100}
             //source={require("../assets/imageItemsCategory/Apple.png")}
-            source={{uri:baseUrl + item.image}}
+            source={{ uri: baseUrl + item.image }}
           />
         </View>
         <View
@@ -57,21 +54,23 @@ const ItemHome = ({item}) => {
                 alignItems: "center",
               }}
               onPress={() => {
-                if (quantity > 0) {
-                  setQuantity(quantity - 1);
+                if (item.quantity > 0) {
+                  //setQuantity(quantity - 1);
                   //Codice per aggiornare la quantita' all'interno del vettore
-                  // itemsStored.map((good)=>{
-                  //   if(good.id == item.id){
-                  //    dispatch(updateQuantity([item.id, quantity]))
-                  //    console.log(good.quantity);
-
-                  //   }})
+                  itemsStored.map((good) => {
+                    if (good.id == item.id) {
+                      dispatch(updateQuantity([item.id, item.quantity - 1]));
+                      console.log(good.quantity);
+                    }
+                  });
                 }
               }}
             >
               <Text style={{ fontSize: 20 }}>-</Text>
             </TouchableOpacity>
-            <Text style={{ marginHorizontal: 10, fontSize:30, font:'bold' }}>{typeQuantity}: {quantity} / {item.full_quantity}</Text>
+            <Text style={{ marginHorizontal: 10, fontSize: 30, font: "bold" }}>
+              {typeQuantity}: {item.quantity} / {item.full_quantity}
+            </Text>
             <TouchableOpacity
               style={{
                 padding: 5,
@@ -80,7 +79,15 @@ const ItemHome = ({item}) => {
                 borderRadius: 10,
                 alignItems: "center",
               }}
-              onPress={() => setQuantity(quantity + 1)}
+              onPress={() => {
+                //setQuantity(quantity + 1);
+                itemsStored.map((good) => {
+                  if (good.id == item.id) {
+                    dispatch(updateQuantity([item.id, item.quantity + 1]));
+                    //console.log(good.quantity);
+                  }
+                });
+              }}
             >
               <Text style={{ fontSize: 20 }}>+</Text>
             </TouchableOpacity>

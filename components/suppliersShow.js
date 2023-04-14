@@ -20,7 +20,6 @@ const SuppliersShow = () => {
         )}
         keyExtractor={(item) => item.id.toString()}
       />
-      <Text>Ciao</Text>
     </View>
   );
 };

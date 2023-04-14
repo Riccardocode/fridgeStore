@@ -1,4 +1,4 @@
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, StyleSheet } from "react-native";
 import ItemsHomePage from "../components/ItemsHomePage";
 import SearchBar from "react-native-elements/dist/searchbar/SearchBar-ios";
 import { useState } from "react";
@@ -14,6 +14,7 @@ const StorageScreen = ({navigation}) => {
     <SafeAreaView>
       <View>
         <SearchBar
+        
           placeholder="Search"
           value={search}
           onChangeText={setSearch}
@@ -24,5 +25,7 @@ const StorageScreen = ({navigation}) => {
     </SafeAreaView>
   );
 };
+
+
 
 export default StorageScreen;
