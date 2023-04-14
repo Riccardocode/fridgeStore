@@ -9,14 +9,21 @@ const ItemHome = ({ item }) => {
   const itemsStored = useSelector((state) => state.goods.goodsArray);
   const dispatch = useDispatch();
   const [typeQuantity, setTypeQuantity] = useState(item.typeQuantity);
+  const [uri,setUri] = useState(baseUrl + item.image)
+  
+  const handleErrorImage = () =>{
+    setUri(item.image);
+  }
   return (
     <Card>
       <View style={{ flexDirection: "row" }}>
         <View style={{ borderRadius: 50 }}>
+      
           <Avatar.Image
             size={100}
             //source={require("../assets/imageItemsCategory/Apple.png")}
-            source={{ uri: baseUrl + item.image }}
+            source={{ uri: uri }}
+            onError={handleErrorImage}
           />
         </View>
         <View

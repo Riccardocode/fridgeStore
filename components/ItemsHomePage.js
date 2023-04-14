@@ -47,7 +47,7 @@ const ItemsHomePage = (props) => {
                   iconStyle={{ marginRight: 10 }}
                 />
               }
-              buttonStyle={{ backgroundColor: "#5637DD" }}
+              buttonStyle={{ backgroundColor: "#2b9094" }}
             />
            
           </View>
@@ -65,7 +65,7 @@ const ItemsHomePage = (props) => {
                   iconStyle={{ marginRight: 10 }}
                 />
               }
-              buttonStyle={{ backgroundColor: "#5637DD" }}
+              buttonStyle={{ backgroundColor: "#2b9094" }}
             />
           </View>
         </View>

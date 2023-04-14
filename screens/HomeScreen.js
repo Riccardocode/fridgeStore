@@ -16,14 +16,35 @@ const HomeScreen = ({ navigation }) => {
       source={require("../assets/homePage.png")}
       style={styles.image}
     >
-      <View style={{ flexDirection: "row",justifyContent:'center',marginVertical:250 }}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          marginVertical: 250,
+        }}
+      >
         <TouchableOpacity
           style={styles.storageButton}
           onPress={() => navigation.navigate("Storage")}
         >
-          <Text style={styles.text}>Storage</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-around",
+              alignItems: "center",
+            }}
+          >
+            <Text style={styles.text}>Storage</Text>
+            
+            <Icon
+              name="play"
+              type="font-awesome"
+              color="#34938f"
+              size={40}
+              iconStyle={{}}
+            />
+          </View>
         </TouchableOpacity>
-        
       </View>
 
       {/* <Button style={styles.storageBut}>
@@ -34,9 +55,7 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  iconn: {
-    
-  },
+  iconn: {},
   image: {
     flex: 1,
     resizeMode: "cover",
@@ -46,12 +65,13 @@ const styles = StyleSheet.create({
     width: 40,
   },
   storageButton: {
+    backgroundColor: "#e4a819",
     width: 350,
-    height: 68,
+    height: 80,
     borderRadius: 20,
-    marginTop:245
-   
-    
+    marginTop: 245,
+    borderWidth: 2,
+    borderColor: "black",
   },
   text: {
     fontSize: 50,
