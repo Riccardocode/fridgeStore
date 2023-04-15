@@ -36,12 +36,12 @@ const ItemsHomePage = (props) => {
           <View style={styles.formButton}>
             <Button
             style={{height:1}}
-              onPress={() => props.navigation.navigate("Storage")}
-              title="Storage"
+              onPress={() => props.navigation.navigate("Send Order")}
+              title="Send Order"
               color="#5637DD"
               icon={
                 <Icon
-                  name="archive"
+                  name="shopping-cart"
                   type="font-awesome"
                   color="#fff"
                   iconStyle={{ marginRight: 10 }}

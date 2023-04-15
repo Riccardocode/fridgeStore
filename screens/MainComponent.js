@@ -1,4 +1,4 @@
-import { Platform, View } from "react-native";
+import { Platform, View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 
 import CategoryScreen from "./CategoryScreen";
@@ -13,6 +13,9 @@ import { useEffect } from "react";
 import { fetchGoods } from "../storage/goodsSlice";
 import { fetchSuppliers } from "../storage/suppliersSlice";
 import SendOrderScreen from "./sendOrderScreen";
+import LoginScreen from "./LoginScreen";
+import { Icon } from "react-native-elements";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const Drawer = createDrawerNavigator();
 
@@ -31,6 +34,40 @@ const HomeNavigator = () => {
         options={{ title: "Home" }}
       />
       <Stack.Screen name="Storage" component={StorageScreen} />
+    </Stack.Navigator>
+  );
+};
+
+const LoginNavigator = () => {
+  const Stack = createStackNavigator();
+  return (
+    <Stack.Navigator initialRouteName="Login" screenOptions={screenOptions}>
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={({ navigation, route }) => ({
+          headerTitle: getFocusedRouteNameFromRoute(route),
+          headerLeft: () => (
+            <Icon
+              name={
+                getFocusedRouteNameFromRoute(route) === "Register"
+                  ? "user-plus"
+                  : "sign-in"
+              }
+              type="font-awesome"
+              iconStyle={styles.stackIcon}
+              onPress={() => navigation.toggleDrawer()}
+            />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="ItemsCategory"
+        component={ItemsCategoryScreen}
+        options={({ route }) => ({
+          title: route.params.category.name,
+        })}
+      />
     </Stack.Navigator>
   );
 };
@@ -66,7 +103,6 @@ const StorageNavigator = () => {
         component={StorageScreen}
         options={{ title: "Storage" }}
       />
-      
     </Stack.Navigator>
   );
 };
@@ -79,7 +115,6 @@ const SendOrder = () => {
         component={SendOrderScreen}
         options={{ title: "Send Order" }}
       />
-      
     </Stack.Navigator>
   );
 };
@@ -103,7 +138,6 @@ const Main = () => {
   useEffect(() => {
     dispatch(fetchGoods());
     dispatch(fetchSuppliers());
-   
   }, [dispatch]);
 
   //return <CategoryScreen categories = {categories}/>
@@ -118,6 +152,21 @@ const Main = () => {
         initialRouterName="Home"
         drawerStyle={{ backgroundColor: "#CEC8FF" }}
       >
+        <Drawer.Screen
+          name="Login"
+          component={LoginNavigator}
+          options={{
+            drawerIcon: ({ color }) => (
+              <Icon
+                name="sign-in"
+                type="font-awesome"
+                size={24}
+                iconStyle={{ width: 24 }}
+                color={color}
+              />
+            ),
+          }}
+        />
         <Drawer.Screen
           name="Home"
           component={HomeNavigator}
@@ -147,5 +196,13 @@ const Main = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  stackIcon: {
+    marginLeft: 10,
+    color: "#fff",
+    fontSize: 24,
+  },
+});
 
 export default Main;

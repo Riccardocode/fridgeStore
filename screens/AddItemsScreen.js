@@ -24,7 +24,7 @@ const AddItemsScreen = (props) => {
   const [quantityType, setQuantityType] = useState("Pz");
   const [quantity, setQuantity] = useState("");
   const [quantityMax, setQuantityMax] = useState("");
-  const [imageUrl, setImageUrl] = useState("./images/unicorn.png");
+  const [imageUrl, setImageUrl] = useState("");
 
   const submit = () => {
     console.log("entrato in submit");
@@ -39,6 +39,8 @@ const AddItemsScreen = (props) => {
       image: imageUrl,
     };
     dispatch(postGood(newItem));
+    props.navigation.navigate("Storage");
+    resetForm();
   };
   const chooseImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -63,6 +65,20 @@ const AddItemsScreen = (props) => {
     }
   };
 
+  const resetForm = () =>{
+    setName("");
+    setCategory("Fruit");
+    setQuantityType("Pz");
+    setQuantity("");
+    setQuantityMax("");
+    setImageUrl("");
+  };
+
+  const handleCancel = () =>{
+    props.navigation.navigate("Storage");
+    resetForm();
+  };
+
   const getImageFromCamera = async () => {
     const cameraPermission = await ImagePicker.requestCameraPermissionsAsync();
 
@@ -80,6 +96,8 @@ const AddItemsScreen = (props) => {
       console.log("not granted*************************");
     }
   };
+
+  
 
   return (
     <SafeAreaView>
@@ -150,7 +168,7 @@ const AddItemsScreen = (props) => {
             size={40}
             raised
             reverse
-            onPress={() => shareShoppingList("Shopping List")}
+            
           />
 
           {/* <Image
@@ -166,7 +184,7 @@ const AddItemsScreen = (props) => {
             size={40}
             raised
             reverse
-            onPress={() => shareShoppingList("Shopping List")}
+            
           />
           {/* <Image
             style={{ width: 130, height: 130 }}
@@ -176,7 +194,7 @@ const AddItemsScreen = (props) => {
       </View>
 
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <TouchableOpacity style={styles.sizeCanSub} onPress={() => {}}>
+        <TouchableOpacity style={styles.sizeCanSub} onPress={() => handleCancel()}>
           <Text style={styles.submit}>Cancel</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.sizeCanSub} onPress={() => submit()}>

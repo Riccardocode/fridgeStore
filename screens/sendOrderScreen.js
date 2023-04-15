@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Share } from "react-native";
+import { View, TouchableOpacity, Share, StyleSheet } from "react-native";
 import SuppliersShow from "../components/suppliersShow";
 import { Text } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -7,7 +7,8 @@ import { updateQuantity } from "../storage/goodsSlice";
 import * as MailComposer from "expo-mail-composer";
 import { Button, Icon } from "react-native-elements";
 
-const SendOrderScreen = () => {
+
+const SendOrderScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.goods);
   let toBuy = [];
@@ -68,6 +69,7 @@ const SendOrderScreen = () => {
         dialogTitle: "Share" + title,
       }
     );
+    topupQuantities();
   };
 
   return (
@@ -92,8 +94,53 @@ const SendOrderScreen = () => {
       </View>
       <SuppliersShow />
 
+      <View style={{ flexDirection: "row", paddingTop:170}}>
+          <View style={styles.formButton}>
+            <Button
+            style={{height:1}}
+              onPress={() => navigation.navigate("Storage")}
+              title="Storage"
+              color="#5637DD"
+              icon={
+                <Icon
+                  name="archive"
+                  type="font-awesome"
+                  color="#fff"
+                  iconStyle={{ marginRight: 10 }}
+                />
+              }
+              buttonStyle={{ backgroundColor: "#2b9094" }}
+            />
+           
+          </View>
+
+          <View style={styles.formButton}>
+            <Button
+              onPress={() => navigation.navigate("Add Items")}
+              title="Add Item"
+              color="#5637DD"
+              icon={
+                <Icon
+                  name="plus"
+                  type="font-awesome"
+                  color="#fff"
+                  iconStyle={{ marginRight: 10 }}
+                />
+              }
+              buttonStyle={{ backgroundColor: "#2b9094" }}
+            />
+          </View>
+        </View>
+
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  formButton: {
+    width: "50%",
+ 
+  },
+});
 
 export default SendOrderScreen;

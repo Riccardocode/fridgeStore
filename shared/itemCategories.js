@@ -1,41 +1,48 @@
 export const CATEGORIES = [
-    {
+    {   
         id:0,
+        name:"Bread and Bakery",
+        image:require("../assets/imageCategories/BreadandBakery.png"), 
+
+    },
+    
+    {
+        id:1,
         name:"Fruit",
         image:require("../assets/imageCategories/Fruit.png"), 
     },
     {
-        id:1,
+        id:2,
         name:"Vegetables",
         image:require("../assets/imageCategories/Vegetables.png"),
     },
     {
-        id:2,
+        id:3,
         name:"Dairy",
         image:require("../assets/imageCategories/Dairy.png"),
     },
     {
-        id:3,
+        id:4,
         name:"Cheese",
         image:require("../assets/imageCategories/Cheese.png"),
     },
     {
-        id:4,
+        id:5,
         name:"Meat",
         image:require("../assets/imageCategories/Meat.png"),
     },
     {
-        id:5,
+        id:6,
         name:"Fish",
         image:require("../assets/imageCategories/Fish.png"),
     },
     {
-        id:6,
+        id:7,
         name:"Beverage",
         image:require("../assets/imageCategories/Beverage.png"),
     },
     {
-        id:7,
+        id:8,
         name:"Wine",
         image:require("../assets/imageCategories/Wine.png"),
     }
