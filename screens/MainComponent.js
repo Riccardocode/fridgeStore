@@ -8,6 +8,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "./HomeScreen";
 import AddItemsScreen from "./AddItemsScreen";
 import StorageScreen from "./StorageScreen";
+import ContactScreen from "./ContactScreen";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchGoods } from "../storage/goodsSlice";
@@ -34,6 +35,18 @@ const HomeNavigator = () => {
         options={{ title: "Home" }}
       />
       <Stack.Screen name="Storage" component={StorageScreen} />
+    </Stack.Navigator>
+  );
+};
+const ContactNavigator = () => {
+  const Stack = createStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={screenOptions}>
+      <Stack.Screen
+        name="Contact"
+        component={ContactScreen}
+        options={{ title: "Contact" }}
+      />
     </Stack.Navigator>
   );
 };
@@ -153,6 +166,11 @@ const Main = () => {
         drawerStyle={{ backgroundColor: "#CEC8FF" }}
       >
         <Drawer.Screen
+          name="Home"
+          component={HomeNavigator}
+          options={{ title: "Home" }}
+        />
+        <Drawer.Screen
           name="Login"
           component={LoginNavigator}
           options={{
@@ -167,11 +185,7 @@ const Main = () => {
             ),
           }}
         />
-        <Drawer.Screen
-          name="Home"
-          component={HomeNavigator}
-          options={{ title: "Home" }}
-        />
+
         <Drawer.Screen
           name="Category"
           component={CategoryNavigator}
@@ -191,6 +205,11 @@ const Main = () => {
           name="Send Order"
           component={SendOrder}
           options={{ title: "Send Order" }}
+        />
+         <Drawer.Screen
+          name="Contact"
+          component={ContactNavigator}
+          options={{ title: "Contact Us" }}
         />
       </Drawer.Navigator>
     </View>
