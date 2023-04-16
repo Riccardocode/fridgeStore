@@ -1,10 +1,14 @@
-import { Platform, View, StyleSheet } from "react-native";
+import { Platform, View, StyleSheet, Image,Text } from "react-native";
 import Constants from "expo-constants";
 
 import CategoryScreen from "./CategoryScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import ItemsCategoryScreen from "./ItemsCategoryScreen";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+} from "@react-navigation/drawer";
 import HomeScreen from "./HomeScreen";
 import AddItemsScreen from "./AddItemsScreen";
 import StorageScreen from "./StorageScreen";
@@ -17,7 +21,7 @@ import SendOrderScreen from "./sendOrderScreen";
 import LoginScreen from "./LoginScreen";
 import { Icon } from "react-native-elements";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-
+import logo from '../assets/FridgeStore.png'
 const Drawer = createDrawerNavigator();
 
 const screenOptions = {
@@ -153,6 +157,20 @@ const Main = () => {
     dispatch(fetchSuppliers());
   }, [dispatch]);
 
+  const CustomDrawerContent = (props) => (
+    <DrawerContentScrollView {...props}>
+      <View style={styles.drawerHeader}>
+        <View style={{ flex: 1}}>
+          <Image source={logo} style={styles.drawerImage} />
+        </View>
+        <View style={{ flex: 2 }}>
+          <Text style={styles.drawerHeaderText}></Text>
+        </View>
+      </View>
+      <DrawerItemList {...props} labelStyle={{ fontWeight: "bold" }} />
+    </DrawerContentScrollView>
+  );
+
   //return <CategoryScreen categories = {categories}/>
   return (
     <View
@@ -163,12 +181,24 @@ const Main = () => {
     >
       <Drawer.Navigator
         initialRouterName="Home"
-        drawerStyle={{ backgroundColor: "#CEC8FF" }}
+        drawerContent={CustomDrawerContent}
+        drawerStyle={{ backgroundColor: "#7be2e6" }}
       >
         <Drawer.Screen
           name="Home"
           component={HomeNavigator}
-          options={{ title: "Home" }}
+          options={{
+            title: "Home",
+            drawerIcon: ({ color }) => (
+              <Icon
+                name="home"
+                type="font-awesome"
+                size={24}
+                iconStyle={{ width: 24 }}
+                color={color}
+              />
+            ),
+          }}
         />
         <Drawer.Screen
           name="Login"
@@ -189,27 +219,82 @@ const Main = () => {
         <Drawer.Screen
           name="Category"
           component={CategoryNavigator}
-          options={{ title: "Category" }}
+          options={{
+            title: "Category",
+            drawerIcon: ({ color }) => (
+              <Icon
+                name="sliders"
+                type="font-awesome"
+                size={24}
+                iconStyle={{ width: 24 }}
+                color={color}
+              />
+            ),
+          }}
         />
         <Drawer.Screen
           name="Add Items"
           component={AddNavigator}
-          options={{ title: "Add Items" }}
+          options={{
+            title: "Add Items",
+            drawerIcon: ({ color }) => (
+              <Icon
+                name="plus"
+                type="font-awesome"
+                size={24}
+                iconStyle={{ width: 24 }}
+                color={color}
+              />
+            ),
+          }}
         />
         <Drawer.Screen
           name="Storage"
           component={StorageNavigator}
-          options={{ title: "Storage" }}
+          options={{
+            title: "Storage",
+            drawerIcon: ({ color }) => (
+              <Icon
+                name="archive"
+                type="font-awesome"
+                size={24}
+                iconStyle={{ width: 24 }}
+                color={color}
+              />
+            ),
+          }}
         />
         <Drawer.Screen
           name="Send Order"
           component={SendOrder}
-          options={{ title: "Send Order" }}
+          options={{
+            title: "Send Order",
+            drawerIcon: ({ color }) => (
+              <Icon
+                name="shopping-cart"
+                type="font-awesome"
+                size={24}
+                iconStyle={{ width: 24 }}
+                color={color}
+              />
+            ),
+          }}
         />
-         <Drawer.Screen
+        <Drawer.Screen
           name="Contact"
           component={ContactNavigator}
-          options={{ title: "Contact Us" }}
+          options={{
+            title: "Contact Us",
+            drawerIcon: ({ color }) => (
+              <Icon
+                name="address-card"
+                type="font-awesome"
+                size={24}
+                iconStyle={{ width: 24 }}
+                color={color}
+              />
+            ),
+          }}
         />
       </Drawer.Navigator>
     </View>
@@ -217,6 +302,27 @@ const Main = () => {
 };
 
 const styles = StyleSheet.create({
+  drawerHeader: {
+    backgroundColor: "#e8c30d",
+    height: 100,
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    flexDirection: "row",
+    
+  },
+  drawerHeaderText: {
+    color: "#fff",
+    fontsize: 60,
+    fontWeight: "bold",
+  },
+  drawerImage: {
+    margin: 10,
+    height: 120,
+    width: 120,
+
+   
+  },
   stackIcon: {
     marginLeft: 10,
     color: "#fff",
