@@ -16,6 +16,9 @@ import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { postGood } from "../storage/goodsSlice";
+import * as ImageManipulator from "expo-image-manipulator";
+import * as MediaLibrary from "expo-media-library";
+import { baseUrl } from "../shared/baseUrl";
 
 const AddItemsScreen = (props) => {
   const dispatch = useDispatch();
@@ -24,7 +27,8 @@ const AddItemsScreen = (props) => {
   const [quantityType, setQuantityType] = useState("Pz");
   const [quantity, setQuantity] = useState("");
   const [quantityMax, setQuantityMax] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(baseUrl + "images/gallery.png");
+ 
 
   const submit = () => {
     console.log("entrato in submit");
@@ -43,58 +47,67 @@ const AddItemsScreen = (props) => {
     resetForm();
   };
   const chooseImage = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const mediaLibraryPermissions =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (status !== "granted") {
-      console.log("Permission not granted!");
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      const source = { uri: result.uri };
-
-      // You can now use the selected image source in your component's state or pass it to a function to upload or display it.
-      setSelectedImage(source);
-    }
-  };
-
-  const resetForm = () =>{
-    setName("");
-    setCategory("Fruit");
-    setQuantityType("Pz");
-    setQuantity("");
-    setQuantityMax("");
-    setImageUrl("");
-  };
-
-  const handleCancel = () =>{
-    props.navigation.navigate("Storage");
-    resetForm();
-  };
-
-  const getImageFromCamera = async () => {
-    const cameraPermission = await ImagePicker.requestCameraPermissionsAsync();
-
-    if (cameraPermission.status === "granted") {
-      console.log(cameraPermission);
-      const capturedImage = await ImagePicker.launchCameraAsync({
+    if (mediaLibraryPermissions.status === "granted") {
+      const capturedImage = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
         aspect: [1, 1],
       });
       if (capturedImage.assets) {
         console.log(capturedImage.assets[0]);
-        setImageUrl(capturedImage.assets[0].uri);
+        processImage(capturedImage.assets[0].uri);
+        
       }
-    } else {
-      console.log("not granted*************************");
     }
+  };
+
+  const resetForm = () => {
+    setName("");
+    setCategory("Fruit");
+    setQuantityType("Pz");
+    setQuantity("");
+    setQuantityMax("");
+    setImageUrl(baseUrl + "images/gallery.png");
+  };
+
+  const handleCancel = () => {
+    props.navigation.navigate("Storage");
+    resetForm();
+  };
+
+  const getImageFromCamera = async () => {
+    try {
+      const cameraPermission =
+        await ImagePicker.requestCameraPermissionsAsync();
+
+      if (cameraPermission.status === "granted") {
+        const capturedImage = await ImagePicker.launchCameraAsync({
+          allowsEditing: true,
+          aspect: [1, 1],
+        });
+        if (capturedImage.assets) {
+          console.log(capturedImage.assets[0]);
+          processImage(capturedImage.assets[0].uri);
+          console.log(logo);
+          //MediaLibrary.saveToLibraryAsync(imageUrl);
+        
+        }
+      }
+    } catch (error) {
+      console.log("something went wrong ", error);
+    }
+  };
+
+  const processImage = async (imgUri) => {
+    const processedImage = await ImageManipulator.manipulateAsync(
+      imgUri,
+      [{ resize: { width: 400 } }],
+      { format: ImageManipulator.SaveFormat.PNG }
+    );
+    console.log(processedImage);
+    setImageUrl(processedImage.uri);
   };
 
   
@@ -124,22 +137,22 @@ const AddItemsScreen = (props) => {
         onChangeText={(quantityMax) => setQuantityMax(quantityMax)}
       />
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        
-          <Picker
-            style={styles.picker}
-            selectedValue={category}
-            placeholder="Category"
-            onValueChange={(itemValue) => setCategory(itemValue)}
-          >
-            <Picker.Item label="Fruit" value={"Fruit"} />
-            <Picker.Item label="Vegetables" value={"Vegetables"} />
-            <Picker.Item label="Dairy" value={"Dairy"} />
-            <Picker.Item label="Cheese" value={"Cheese"} />
-            <Picker.Item label="Meat" value={"Meat"} />
-            <Picker.Item label="Fish" value={"Fish"} />
-            <Picker.Item label="Beverage" value={"Beverage"} />
-            <Picker.Item label="Wine" value={"Wine"} />
-          </Picker>
+        <Picker
+          style={styles.picker}
+          selectedValue={category}
+          placeholder="Category"
+          onValueChange={(itemValue) => setCategory(itemValue)}
+        >
+          <Picker.Item label="Bread and Bakery" value={"BreadandBakery"} />
+          <Picker.Item label="Fruit" value={"Fruit"} />
+          <Picker.Item label="Vegetables" value={"Vegetables"} />
+          <Picker.Item label="Dairy" value={"Dairy"} />
+          <Picker.Item label="Cheese" value={"Cheese"} />
+          <Picker.Item label="Meat" value={"Meat"} />
+          <Picker.Item label="Fish" value={"Fish"} />
+          <Picker.Item label="Beverage" value={"Beverage"} />
+          <Picker.Item label="Wine" value={"Wine"} />
+        </Picker>
 
         <Picker
           style={styles.picker}
@@ -156,53 +169,52 @@ const AddItemsScreen = (props) => {
       <View
         style={{
           flexDirection: "row",
-          alignItems: "baseline",
+          alignItems: "center",
           justifyContent: "space-evenly",
         }}
       >
-        <TouchableOpacity onPress={() => getImageFromCamera()}>
-          <Icon
-            name="camera"
-            type="font-awesome"
-            color="#2b9094"
-            size={40}
-            raised
-            reverse
-            
-          />
+        <Image
+          source={{ uri: imageUrl }}
+          style={{ width: 200, height: 200, borderRadius: 50 }}
 
-          {/* <Image
-            style={{ width: 130, height: 130, marginLeft: 20 }}
-            source={require("../assets/camera.png")}
-          /> */}
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => chooseImage()}>
-          <Icon
-            name="image"
-            type="font-awesome"
-            color="#2b9094"
-            size={40}
-            raised
-            reverse
-            
-          />
-          {/* <Image
-            style={{ width: 130, height: 130 }}
-            source={require("../assets/gallery.png")}
-          /> */}
-        </TouchableOpacity>
+        />
+        <View>
+          <TouchableOpacity onPress={() => getImageFromCamera()}>
+            <Icon
+              name="camera"
+              type="font-awesome"
+              color="#2b9094"
+              size={40}
+              raised
+              reverse
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => chooseImage()}>
+            <Icon
+              name="image"
+              type="font-awesome"
+              color="#2b9094"
+              size={40}
+              raised
+              reverse
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={{ flexDirection: "row", justifyContent: "center" }}>
-        <TouchableOpacity style={styles.sizeCanSub} onPress={() => handleCancel()}>
-          <Text style={styles.submit}>Cancel</Text>
+        <TouchableOpacity
+          style={styles.sizeCanSub}
+          onPress={() => handleCancel()}
+        >
+          <Text style={styles.cancel}>Cancel</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.sizeCanSub} onPress={() => submit()}>
           <Text style={styles.submit}>Submit</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={{ flexDirection: "row", paddingTop: 39 }}>
+      <View style={{ flexDirection: "row", paddingTop: 13 }}>
         <View style={styles.formButton}>
           <Button
             onPress={() => props.navigation.navigate("Storage")}
@@ -250,7 +262,7 @@ const styles = StyleSheet.create({
   },
   input: {
     margin: 10,
-    marginTop: 20,
+    marginTop: 5,
     backgroundColor: "#df9682",
     color: "white",
     fontSize: 20,
@@ -271,12 +283,22 @@ const styles = StyleSheet.create({
 
     textAlign: "center",
     textAlignVertical: "center",
-    backgroundColor: "blue",
+    backgroundColor: "#008CBA",
     color: "white",
     fontSize: 20,
     height: 40,
     borderRadius: 10,
   },
+  cancel:{
+    margin: 10,
+    textAlign: "center",
+    textAlignVertical: "center",
+    backgroundColor: "#f44336",
+    color: "white",
+    fontSize: 20,
+    height: 40,
+    borderRadius: 10,
+  }
 });
 
 export default AddItemsScreen;

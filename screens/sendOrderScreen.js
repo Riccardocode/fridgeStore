@@ -94,7 +94,7 @@ const SendOrderScreen = ({navigation}) => {
       </View>
       <SuppliersShow />
 
-      <View style={{ flexDirection: "row", paddingTop:170}}>
+      <View style={{ flexDirection: "row", paddingTop:178}}>
           <View style={styles.formButton}>
             <Button
             style={{height:1}}
